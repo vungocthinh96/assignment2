@@ -2,22 +2,32 @@ package utils;
 
 import java.util.Random;
 
-public class CommonUtils {
+public class Validator {
 
-    public static String checkAccountNumber(String accountNumber) {
-        boolean check = accountNumber.matches("[0-9]+") && accountNumber.length() == 10;
+    public String checkAccountNumber(String accountNumber) {
+        boolean check = false;
+        try {
+            check = accountNumber.matches("[0-9]+") && accountNumber.length() == 10;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         if(check == true)
             return "true";
         return "false";
     }
-    public static String checkPassword(String password) {
-        boolean check = password.matches(".*[a-zA-Z].*") && password.matches(".*[0-9].*") && password.length() >= 8 && password.length() <= 31;
+    public String checkPassword(String password) {
+        boolean check = false;
+        try {
+            check = password.matches(".*[a-zA-Z].*") && password.matches(".*[0-9].*") && password.length() >= 8 && password.length() <= 31;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         if(check == true)
             return "true";
         return "false";
     }
 
-    public static String generateCaptchar() {
+    public String generateCaptchar() {
         char data[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
                 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
                 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
@@ -36,7 +46,8 @@ public class CommonUtils {
         return new String(index);
     }
 
-    public static String checkCaptchar(String captcharInput, String captcharGenerate) {
+    public String checkCaptchar(String captcharInput, String captcharGenerate) {
+
         if(captcharInput.equals(captcharGenerate))
             return "true";
         return "false";

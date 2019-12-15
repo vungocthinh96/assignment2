@@ -1,59 +1,69 @@
 package controller;
 
 import model.Account;
-import utils.CommonUtils;
-
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import utils.Validator;
 
 public class MainController {
-    private ResourceBundle resourceBundle;
-    private Scanner scanner;
 
-    public MainController(ResourceBundle resourceBundle, Scanner scanner) {
-        this.resourceBundle = resourceBundle;
-        this.scanner = scanner;
+    private InputReader inputReader;
+    private Validator valdator;
+
+    public MainController(InputReader inputReader, Validator valdator) {
+        this.inputReader = inputReader;
+        this.valdator = valdator;
+    }
+
+    public InputReader getInputReader() {
+        return inputReader;
+    }
+
+    public void setInputReader(InputReader inputReader) {
+        this.inputReader = inputReader;
+    }
+
+    public Validator getValdator() {
+        return valdator;
+    }
+
+    public void setValdator(Validator valdator) {
+        this.valdator = valdator;
     }
 
     public void login() {
 
-        boolean checkAccount = false;
-        boolean checkPassword = false;
         boolean checkCaptchar = false;
+        boolean check1 = false;
 
-        while(!checkAccount) {
-            System.out.print(resourceBundle.getString("acount_number") + ": ");
-            String account = scanner.nextLine();
-            String check = CommonUtils.checkAccountNumber(account);
-            if(check.equals("true"))
-                checkAccount = true;
-            else {
-                System.out.println(resourceBundle.getString("error_acount_number"));
+        do {
+            Account account1 = inputReader.enterAccountInformation();
+            String checkAccountNumber = valdator.checkAccountNumber(account1.getAccountNumber());
+            if (!checkAccountNumber.equals("true")) {
+                System.out.println(inputReader.getResourceBundle().getString("error_acount_number"));
+                continue;
+            } else {
+                check1 = true;
             }
-        }
-
-        while(!checkPassword) {
-            System.out.print(resourceBundle.getString("password") + ": ");
-            String password = scanner.nextLine();
-            String check = CommonUtils.checkPassword(password);
-            if(check.equals("true"))
-                checkPassword = true;
-            else {
-                System.out.println(resourceBundle.getString("error_password"));
+            String checkPassword = valdator.checkPassword(account1.getPassword());
+            if (!checkPassword.equals("true")) {
+                System.out.println(inputReader.getResourceBundle().getString("error_password"));
+                check1 = false;
+                continue;
             }
-        }
 
-        while(!checkCaptchar) {
-            System.out.print(resourceBundle.getString("captchar") + ": ");
-            String captchar = CommonUtils.generateCaptchar();
+        } while (!check1);
+
+
+        while (!checkCaptchar) {
+            System.out.print(inputReader.getResourceBundle().getString("captchar") + ": ");
+            String captchar = valdator.generateCaptchar();
             System.out.println(captchar);
-            System.out.print(resourceBundle.getString("captchar_enter")+": ");
-            String captcharEnter = scanner.nextLine();
-            String check = CommonUtils.checkCaptchar(captcharEnter, captchar);
-            if(check.equals("true"))
+            System.out.print(inputReader.getResourceBundle().getString("captchar_enter") + ": ");
+            String captcharEnter = inputReader.getScanner().nextLine();
+            String check = valdator.checkCaptchar(captcharEnter, captchar);
+            if (check.equals("true"))
                 checkCaptchar = true;
             else {
-                System.out.println(resourceBundle.getString("error_captchar"));
+                System.out.println(inputReader.getResourceBundle().getString("error_captchar"));
             }
         }
     }
