@@ -2,6 +2,7 @@ package controller;
 
 import model.Account;
 
+import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -13,7 +14,6 @@ public class InputReader {
         this.scanner = scanner;
         this.resourceBundle = resourceBundle;
     }
-
 
     public Scanner getScanner() {
         return scanner;
@@ -31,12 +31,22 @@ public class InputReader {
         this.resourceBundle = resourceBundle;
     }
 
-    public Account enterAccountInformation() {
+    public Account getAccountInformation() {
         System.out.print(resourceBundle.getString("acount_number") + ": ");
-        String accountNumber = scanner.nextLine();
+        String accountNumber = scanner.next();
         System.out.print(resourceBundle.getString("password") + ": ");
-        String password = scanner.nextLine();
+        String password = scanner.next();
         Account account = new Account(accountNumber, password);
         return account;
+    }
+
+    public String inputCaptcha() {
+        String captcha = "";
+        try {
+            captcha = scanner.next();
+        } catch (InputMismatchException e) {
+            System.out.println(e.getMessage());
+        }
+        return captcha;
     }
 }

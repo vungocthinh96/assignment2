@@ -1,6 +1,8 @@
-package utils;
+package validator;
 
 import org.junit.Test;
+import utils.CommonUtils;
+
 import static org.junit.Assert.*;
 public class CommonUtilsTest {
 
@@ -25,9 +27,8 @@ public class CommonUtilsTest {
 
     @Test
     public void testGenerateCaptchar() {
-        Validator validator = new Validator();
-        String captchar1 = validator.generateCaptchar();
-        String captchar2 = validator.generateCaptchar();
+        String captchar1 = CommonUtils.generateCaptcha();
+        String captchar2 = CommonUtils.generateCaptcha();
         assertEquals(false, captchar1.equals(captchar2));
     }
 

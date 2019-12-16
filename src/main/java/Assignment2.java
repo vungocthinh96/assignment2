@@ -1,7 +1,6 @@
 import controller.InputReader;
-import controller.MainController;
-import sun.applet.Main;
-import utils.Validator;
+import controller.AccountController;
+import validator.Validator;
 
 import java.util.InputMismatchException;
 import java.util.Locale;
@@ -28,7 +27,7 @@ public class Assignment2 {
         ResourceBundle bundle;
         Validator valdator;
         InputReader inputReader;
-        MainController mainController;
+        AccountController accountController;
         try {
             Scanner scanner = new Scanner(System.in);
             int lang = scanner.nextInt();
@@ -37,15 +36,15 @@ public class Assignment2 {
                     bundle = ResourceBundle.getBundle("Vi", new Locale("vi", "VN"));
                     inputReader = new InputReader(scanner, bundle);
                     valdator = new Validator();
-                    mainController = new MainController(inputReader, valdator);
-                    mainController.login();
+                    accountController = new AccountController(inputReader, valdator);
+                    accountController.login();
                     break;
                 case 2:
                     bundle = ResourceBundle.getBundle("En", Locale.US);
                     inputReader = new InputReader(scanner, bundle);
                     valdator = new Validator();
-                    mainController = new MainController(inputReader, valdator);
-                    mainController.login();
+                    accountController = new AccountController(inputReader, valdator);
+                    accountController.login();
                     break;
                 case 3:
                     System.out.println("exit !!!");
